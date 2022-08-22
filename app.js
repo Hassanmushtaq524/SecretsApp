@@ -9,7 +9,7 @@ const session = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
 
@@ -18,9 +18,9 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.set('trust proxy', 1) // trust first proxy
+app.set("trust proxy", 1) // trust first proxy
 app.use(session({
-  secret: 'keyboard cat',
+  secret: "keyboard cat",
   resave: false,
   saveUninitialized: true,
   cookie: {}
@@ -33,7 +33,7 @@ app.use(passport.session());
 main().catch(err => console.log(err));
  
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/userDB');
+  await mongoose.connect("mongodb://localhost:27017/userDB");
   }
 
 const userSchema = new mongoose.Schema({
@@ -93,7 +93,7 @@ app.post("/login", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            passport.authenticate('local')(req, res, function () {
+            passport.authenticate("local")(req, res, function () {
                 res.redirect("/secrets");
             })
         }
@@ -104,8 +104,8 @@ app.get("/auth/google",
     passport.authenticate("google", {scope: ["profile"]})
 );
 
-app.get('/auth/google/secrets', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+app.get("/auth/google/secrets", 
+  passport.authenticate("google", { failureRedirect: "/login" }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect("/secrets");
